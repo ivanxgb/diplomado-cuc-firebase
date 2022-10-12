@@ -14,7 +14,6 @@ export function Form() {
   };
   return (
     <>
-      <h1 className="text-center">Diplomado CUC Taller 3</h1>
       <form className="container" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>

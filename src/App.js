@@ -1,8 +1,8 @@
 import "./App.css";
-import { Form } from "./components/form/Form";
+import { Container } from "./components/container/Container";
 
 function App() {
-  return <Form />;
+  return <Container />;
 }
 
 export default App;
