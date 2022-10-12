@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Error} from "../error/Error";
 
 export function Form({ addUser }) {
   const [name, setName] = useState("");
@@ -6,7 +7,7 @@ export function Form({ addUser }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
-
+  const [error, setError] = useState({});
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
@@ -16,9 +17,31 @@ export function Form({ addUser }) {
       phone,
       country
     }
+    if(checkForm() === false) return;
     addUser(user);
     resetForm();
   };
+
+  const checkForm = () => {
+    setError({});
+    if(name.trim() === "") {
+      setError({name: "Name is required"});
+    }
+    if(lastname.trim() === "") {
+      setError({lastname: "Lastname is required"});
+    }
+    if(email.trim() === "") {
+      setError({email: "Email is required"});
+    }
+    if(phone.trim() === "" || phone.trim().length < 6 || isNaN(parseInt(phone))) {
+      setError({phone: "Phone must be a number and have at least 6 digits"});
+    }
+    if(country.trim() === "") {
+      setError({country: "Country is required"});
+    }
+
+    return Object.keys(error).length === 0;
+  }
 
   const resetForm = () => {
     setName("");
@@ -42,6 +65,7 @@ export function Form({ addUser }) {
             onChange={({ target }) => setName(target.value)}
             required
           />
+          {error.name && <Error error={error.name}></Error>}
         </div>
         <div className="form-group">
           <label htmlFor="lastname">Lastname</label>
@@ -54,6 +78,7 @@ export function Form({ addUser }) {
             onChange={({ target }) => setLastName(target.value)}
             required
           />
+          {error.lastname && <Error error={error.lastname}></Error>}
         </div>
         <div className="form-group">
           <label htmlFor="email">Email address</label>
@@ -66,6 +91,7 @@ export function Form({ addUser }) {
             onChange={({ target }) => setEmail(target.value)}
             required
           />
+          {error.email && <Error error={error.email}></Error>}
         </div>
         <div className="form-group">
           <label htmlFor="phone">Phone</label>
@@ -81,6 +107,7 @@ export function Form({ addUser }) {
             onChange={({ target }) => setPhone(target.value)}
             required
           />
+          {error.phone && <Error error={error.phone}></Error>}
         </div>
 
         <div className="form-group">
@@ -92,10 +119,12 @@ export function Form({ addUser }) {
             onChange={({ target }) => setCountry(target.value)}
             required
           >
+            <option value="">Choose a Country</option>
             <option value="Colombia">Colombia</option>
             <option value="Mexico">Mexico</option>
             <option value="Peru">Peru</option>
           </select>
+          {error.country && <Error error={error.country}></Error>}
         </div>
 
         <button type="submit" className="btn btn-primary w-100 mt-5">
