@@ -1,17 +1,33 @@
 import React, { useState } from "react";
 
-export function Form() {
+export function Form({ addUser }) {
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("");
   const [country, setCountry] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, lastName, email, phone, country);
+    const user = {
+      name,
+      lastname,
+      email,
+      phone,
+      country
+    }
+    addUser(user);
+    resetForm();
   };
+
+  const resetForm = () => {
+    setName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+    setCountry("");
+  }
+
   return (
     <>
       <form className="container" onSubmit={handleSubmit}>
@@ -34,7 +50,7 @@ export function Form() {
             className="form-control"
             id="lastname"
             placeholder="Gonzalez"
-            value={lastName}
+            value={lastname}
             onChange={({ target }) => setLastName(target.value)}
             required
           />
