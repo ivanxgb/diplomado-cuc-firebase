@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Error} from "../error/Error";
+import { Error } from "../error/Error";
 
 export function Form({ addUser }) {
   const [name, setName] = useState("");
@@ -15,33 +15,37 @@ export function Form({ addUser }) {
       lastname,
       email,
       phone,
-      country
-    }
-    if(checkForm() === false) return;
+      country,
+    };
+    if (checkForm() === false) return;
     addUser(user);
     resetForm();
   };
 
   const checkForm = () => {
     setError({});
-    if(name.trim() === "") {
-      setError({name: "Name is required"});
+    if (name.trim() === "") {
+      setError({ name: "Name is required" });
     }
-    if(lastname.trim() === "") {
-      setError({lastname: "Lastname is required"});
+    if (lastname.trim() === "") {
+      setError({ lastname: "Lastname is required" });
     }
-    if(email.trim() === "") {
-      setError({email: "Email is required"});
+    if (email.trim() === "") {
+      setError({ email: "Email is required" });
     }
-    if(phone.trim() === "" || phone.trim().length < 6 || isNaN(parseInt(phone))) {
-      setError({phone: "Phone must be a number and have at least 6 digits"});
+    if (
+      phone.trim() === "" ||
+      phone.trim().length < 6 ||
+      isNaN(parseInt(phone))
+    ) {
+      setError({ phone: "Phone must be a number and have at least 6 digits" });
     }
-    if(country.trim() === "") {
-      setError({country: "Country is required"});
+    if (country.trim() === "") {
+      setError({ country: "Country is required" });
     }
 
     return Object.keys(error).length === 0;
-  }
+  };
 
   const resetForm = () => {
     setName("");
@@ -49,7 +53,7 @@ export function Form({ addUser }) {
     setEmail("");
     setPhone("");
     setCountry("");
-  }
+  };
 
   return (
     <>
